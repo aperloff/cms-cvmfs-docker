@@ -22,18 +22,10 @@ RUN mkdir .globus
 RUN chmod 0700 .globus
 RUN mkdir /cvmfs/cms.cern.ch ; #mkdir /cvmfs/cms-condb.cern.ch
 RUN echo "cms.cern.ch /cvmfs/cms.cern.ch cvmfs defaults 0 0" >> /etc/fstab
-RUN mkdir /cvmfs/cms-ib.cern.ch ;
-RUN echo "cms-ib.cern.ch /cvmfs/cms-ib.cern.ch cvmfs defaults 0 0" >> /etc/fstab
 RUN mkdir /cvmfs/oasis.opensciencegrid.org ;
 RUN echo "oasis.opensciencegrid.org /cvmfs/oasis.opensciencegrid.org cvmfs defaults 0 0" >> /etc/fstab
 RUN mkdir /cvmfs/cms-lpc.opensciencegrid.org ;
 RUN echo "cms-lpc.opensciencegrid.org /cvmfs/cms-lpc.opensciencegrid.org cvmfs defaults 0 0" >> /etc/fstab
-RUN mkdir /cvmfs/sft.cern.ch ;
-RUN echo "sft.cern.ch /cvmfs/sft.cern.ch cvmfs defaults 0 0" >> /etc/fstab
-RUN mkdir /cvmfs/cms-bril.cern.ch ;
-RUN echo "cms-bril.cern.ch /cvmfs/cms-bril.cern.ch cvmfs defaults 0 0" >> /etc/fstab
-RUN mkdir /cvmfs/cms-opendata-conddb.cern.ch ;
-RUN echo "cms-opendata-conddb.cern.ch /cvmfs/cms-opendata-conddb.cern.ch cvmfs defaults 0 0" >> /etc/fstab
 
 EXPOSE 22
 CMD /root/run.sh

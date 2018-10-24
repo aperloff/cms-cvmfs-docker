@@ -1,6 +1,6 @@
 CVMFS_CACHE_BASE=/var/cache/cvmfs2
 CVMFS_QUOTA_LIMIT=46000
-CVMFS_REPOSITORIES='cms.cern.ch,cms-ib.cern.ch,oasis.opensciencegrid.org,cms-lpc.opensciencegrid.org,sft.cern.ch,cms-bril.cern.ch,cms-opendata-conddb.cern.ch'
+CVMFS_REPOSITORIES='cms.cern.ch,oasis.opensciencegrid.org,cms-lpc.opensciencegrid.org'
 CVMFS_HTTP_PROXY=DIRECT
 #CVMFS_HTTP_PROXY="http://ca-proxy.cern.ch:3128"
 CMS_LOCAL_SITE="T3_US_OSG"
