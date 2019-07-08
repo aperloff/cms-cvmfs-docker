@@ -1,0 +1,15 @@
+version: "3.2"
+
+services:
+  cms-cvmfs-docker:
+    cap_add: 
+      - SYS_ADMIN
+    devices: 
+      - /dev/fuse
+    image: cms-cvmfs-docker
+    ipc: host
+    volumes: 
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY}
+    stdin_open: true
