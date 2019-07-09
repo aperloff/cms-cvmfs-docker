@@ -1,4 +1,8 @@
 #!/bin/bash
 
+#for mountpoint in `grep cvmfs /etc/fstab | awk '{print $2}'`
+#do
+#    mount $mountpoint
+#done
 mount -a
-sleep 999999999
+trap : TERM INT; sleep infinity & wait
