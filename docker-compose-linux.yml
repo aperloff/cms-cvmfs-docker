@@ -1,0 +1,17 @@
+version: "3.2"
+
+# make sure that iptables allows connections to INPUT from docker0
+#  and xhost +docker.container.ip.address (172.17.0.X, probably)
+
+services:
+  cms-cvmfs-docker:
+    cap_add:
+      - SYS_ADMIN
+    container_name: cms-cvmfs
+    devices:
+      - /dev/fuse
+    image: cms-cvmfs-docker
+    ipc: host
+    environment:
+      - DISPLAY=gateway.
+

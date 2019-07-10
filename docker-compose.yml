@@ -1,5 +1,8 @@
 version: "3.2"
 
+# Tell XQuartz to accept remote connections (and restart)
+#  and xhost +127.0.0.1
+
 services:
   cms-cvmfs-docker:
     cap_add: 
@@ -9,7 +12,5 @@ services:
       - /dev/fuse
     image: cms-cvmfs-docker
     ipc: host
-    volumes: 
-      - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=host.docker.internal:0
