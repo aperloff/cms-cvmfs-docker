@@ -6,7 +6,7 @@ ADD cvmfs/default.local /etc/cvmfs/default.local
 RUN yum update -y \
     && yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm \
     && yum -y install openssh-server cvmfs man freetype openssl098e libXpm libXext wget git tcl \
-       perl-ExtUtils-Embed perl-libwww-perl compat-libstdc++-33 \a
+       perl-ExtUtils-Embed perl-libwww-perl compat-libstdc++-33 \
     && yum clean all \
     && rm -rf /tmp/.X* \
     && for repo in cms.cern.ch cms-ib.cern.ch oasis.opensciencegrid.org \
