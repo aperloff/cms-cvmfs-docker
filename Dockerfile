@@ -5,7 +5,7 @@ ADD cvmfs/default.local /etc/cvmfs/default.local
 
 RUN yum update -y \
     && yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm \
-    && yum -y install openssh-server cvmfs man freetype openssl098e libXpm libXext wget git \
+    && yum -y install openssh-server cvmfs man freetype openssl098e libXpm libXext libXft wget git \
        perl-ExtUtils-Embed perl-libwww-perl compat-libstdc++-33 \
     && yum clean all \
     && rm -rf /tmp/.X* \
