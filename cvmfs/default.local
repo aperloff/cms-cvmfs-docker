@@ -4,3 +4,4 @@ CVMFS_REPOSITORIES='cms.cern.ch,cms-ib.cern.ch,oasis.opensciencegrid.org,cms-lpc
 CVMFS_HTTP_PROXY=DIRECT
 #CVMFS_HTTP_PROXY="http://ca-proxy.cern.ch:3128"
 CMS_LOCAL_SITE="T3_US_OSG"
+CVMFS_SERVER_URL=http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@

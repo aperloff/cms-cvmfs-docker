@@ -27,6 +27,12 @@ RUN yum install -y deltarpm \
        	   sft.cern.ch cms-bril.cern.ch cms-opendata-conddb.cern.ch ilc.desy.de; \
 	   do mkdir /cvmfs/$repo; echo "$repo /cvmfs/$repo cvmfs defaults 0 0" >> /etc/fstab; \
 	done \
+    && mkdir /etc/cvmfs/keys/desy.de \
+    && wget "https://confluence.desy.de/download/attachments/159747860/desy.de.pub?version=1&modificationDate=1584693774318&api=v2" -O /etc/cvmfs/keys/desy.de/desy.de.pub \
+    && for line in 'CVMFS_SERVER_URL="http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@"' \
+                   'CVMFS_KEYS_DIR=/etc/cvmfs/keys/desy.de' 'CVMFS_USE_GEOAPI=yes'; \
+		do echo $line >> /etc/cvmfs/domain.d/desy.de.conf; \
+	done \
     && groupadd cmsuser \
     && useradd -m -s /bin/bash -g cmsuser cmsuser \
 # In sl6, the default limit of 1024 causes a problem if host UID == guest UID
