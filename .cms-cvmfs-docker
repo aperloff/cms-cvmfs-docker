@@ -76,7 +76,7 @@ cvmfs_docker() {
 	echo "NOTE: No local mount set."
     fi
 
-    cmd="docker run --rm -it -P --device /dev/fuse --cap-add SYS_ADMIN -e CVMFS_MOUNTS=\"${mounts}\" -e DISPLAY=host.docker.internal:0 -e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsuser/.globus"
+    cmd="docker run --rm -it -P --device /dev/fuse --cap-add SYS_ADMIN -e CVMFS_MOUNTS=\"${mounts}\" -e DISPLAY=host.docker.internal:0 -e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsusr/.globus"
     if [[ -n $local_mount ]]; then
 	cmd="${cmd} ${local_mount}"
     fi

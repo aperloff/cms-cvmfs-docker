@@ -57,12 +57,12 @@ You may also customize the run command with some additional options. These optio
    - sft.cern.ch
    - cms-bril.cern.ch
    - cms-opendata-conddb.cern.ch
-- To access a grid certificate on the host computer you will need to not only mount the directory containing the certificate files, but also map the host user's UID and GID to that of the remote user. To do this you will need to append the commands: ```-e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsuser/.globus```. Though technically the local ```.globus``` folder doesn't need to be in the local users home area.
+- To access a grid certificate on the host computer you will need to not only mount the directory containing the certificate files, but also map the host user's UID and GID to that of the remote user. To do this you will need to append the commands: ```-e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsusr/.globus```. Though technically the local ```.globus``` folder doesn't need to be in the local users home area.
 - To mount other local folders, simply add ```-v <path to local folder>:<path to remote folder>```.
 - To name the container, add the ```--name <name>``` option. If you don't name the container, Docker will assign a random string name to the container. You can find the name of the container by entering the command ```docker ps -a``` on the host computer.
 
 A full command may look something like:
-> docker run --rm -it -P --device /dev/fuse --cap-add SYS_ADMIN -e CVMFS_MOUNTS="cms.cern.ch oasis.opensciencegrid.org" -e DISPLAY=host.docker.internal:0 -e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsuser/.globus aperloff/cms-cvmfs-docker:latest
+> docker run --rm -it -P --device /dev/fuse --cap-add SYS_ADMIN -e CVMFS_MOUNTS="cms.cern.ch oasis.opensciencegrid.org" -e DISPLAY=host.docker.internal:0 -e MY_UID=$(id -u) -e MY_GID=$(id -g) -v ~/.globus:/home/cmsusr/.globus aperloff/cms-cvmfs-docker:latest
 
 ### Stopping a container
 
@@ -93,7 +93,7 @@ The starting path will be '/'. Without the ```-i``` command the shell will start
 
 ### Running a shell script upon startup (will not be interactive)
 
-If all you'd like to do is run a single shell script or command within bash, you may pass this as the docker run "[COMMAND] [ARG...]" options. This will, in fact, be gobbled up by the 'su' command in the run.sh script which started the bash shell owned by the cmsuser user. In order to run a command, use the syntax:
+If all you'd like to do is run a single shell script or command within bash, you may pass this as the docker run "[COMMAND] [ARG...]" options. This will, in fact, be gobbled up by the 'su' command in the run.sh script which started the bash shell owned by the cmsusr user. In order to run a command, use the syntax:
 > docker run <options> aperloff/cms-cvmfs-docker:latest -c <command>
 where all of the docker run options have been omitted for clarity. You may run multiple commands if they are separated by "&&" and surrounded by quotes. For example:
 > -c "<command> && <command>"
@@ -110,7 +110,7 @@ Now that you've started the container, you have full access to the suite of grid
 
 Prerequisites:
 - You've mounted oasis.opensciencegrid.org
-- You've mounted you local .globus folder to /home/cmsuser/.globus
+- You've mounted you local .globus folder to /home/cmsusr/.globus
 - The permissions on the .globus folder, the usercert.pem file, and userkey.pem file are correct
 
 If you've satisfied the prerequisites, then you simply need to run the command:
