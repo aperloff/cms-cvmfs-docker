@@ -2,8 +2,7 @@ FROM quay.io/centos/centos:stream8
 
 MAINTAINER Alexx Perloff "Alexx.Perloff@Colorado.edu"
 
-# ADD cvmfs/cern.repo /etc/yum.repos.d/cern.repo
-# ADD cvmfs/cernvm.repo /etc/yum.repos.d/cernvm.repo
+ADD cvmfs/cern.repo /etc/yum.repos.d/cern.repo
 ADD cvmfs/default.local /etc/cvmfs/default.local
 ADD cvmfs/krb5.conf /etc/krb5.conf
 ADD cvmfs/run.sh /run.sh
@@ -12,12 +11,9 @@ ADD cvmfs/vnc_utils.sh /usr/local/vnc_utils.sh
 
 # Download the CernVM-FS repository rpm first to get around an expired certificate error
 RUN yum update -y \
+    && rm /etc/yum.repos.d/cern.repo \
     && yum install -y epel-release \
     && yum repolist \
-#    && yum install -y wget \
-#    && wget --no-check-certificate https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm \
-#    && yum localinstall -y cvmfs-release-latest.noarch.rpm \
-#    && rm cvmfs-release-latest.noarch.rpm \
     && yum install -y https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm \
     && yum install -y cern-get-sso-cookie \
     && yum install -y emacs nano vim python3 openssh-server cvmfs man freetype openssl libXpm libXext wget git \
@@ -34,10 +30,16 @@ RUN yum update -y \
 	done \
     && groupadd cmsusr \
     && useradd -m -s /bin/bash -g cmsusr cmsusr
-# In sl6, the default limit of 1024 causes a problem if host UID == guest UID
-# While this container uses sl7, this line is left for reference
-#    && sed -i 's/1024/8192/' /etc/security/limits.d/90-nproc.conf
-#    && sed -i 's/4096/8192/' /etc/security/limits.d/20-nproc.conf
+
+# Changing some configuration options to obey Fermilab computer security policies
+# Note: Not all Fermilab policies apply to off-site computers or containers. For more details see
+#       Linux Baseline CD DocDB 1065 or https://linux-mirrors.fnal.gov/linux/fermilab/centos/8/notes.html
+RUN sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 300/' /etc/ssh/sshd_config \
+    && sed -i 's/#ClientAliveCountMax 3/ClientAliveCountMax 3/' /etc/ssh/sshd_config \
+    && sed -i 's/umask 002/umask 0077/' /etc/profile \
+    && sed -i 's/umask 022/umask 0077/' /etc/profile \
+    && sed -i 's/umask 002/umask 0077/' /etc/bashrc \
+    && sed -i 's/umask 022/umask 0077/' /etc/bashrc
 
 # Install noVNC and WebSockify
 RUN wget --no-check-certificate --content-disposition -O /usr/local/novnc-noVNC-v1.3.0.tar.gz https://github.com/novnc/noVNC/tarball/v1.3.0 \
@@ -47,6 +49,12 @@ RUN wget --no-check-certificate --content-disposition -O /usr/local/novnc-noVNC-
     && rm /usr/local/novnc-noVNC-v1.3.0.tar.gz \
     && ln -s /usr/local/novnc-noVNC-d876ea5 /usr/local/novnc \
     && git clone https://github.com/novnc/websockify /usr/local/novnc/utils/websockify
+
+# Install auth-get-sso-cookie
+# Need to login to gitlab.cern.ch to install
+#RUN git clone https://gitlab.cern.ch/authzsvc/tools/auth-get-sso-cookie.git \
+#    && cd auth-get-sso-cookie \
+#    && python3 -m pip install --no-cache-dir .
 
 WORKDIR /home/cmsusr
 ADD cvmfs/append_to_bashrc.sh .append_to_bashrc.sh
