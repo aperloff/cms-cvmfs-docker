@@ -31,8 +31,8 @@ if [ -f "/cvmfs/cms.cern.ch/cmsset_default.sh" ]; then
 else
     echo -e "Unable to source /cvmfs/cms.cern.ch/cmsset_default.sh"
 fi
-if [ -f "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/current/el7-x86_64/setup.sh" ]; then
-    source /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/current/el7-x86_64/setup.sh
+if [ -f "/cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/current/el8-x86_64/setup.sh" ]; then
+    source /cvmfs/oasis.opensciencegrid.org/mis/osg-wn-client/current/el8-x86_64/setup.sh
 else
     echo -e "Unable to setup the grid utilities from /cvmfs/oasis.opensciencegrid.org/"
 fi
