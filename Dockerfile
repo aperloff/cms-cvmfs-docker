@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM quay.io/centos/centos:stream8
 
 MAINTAINER Alexx Perloff "Alexx.Perloff@Colorado.edu"
