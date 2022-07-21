@@ -5,7 +5,7 @@ This project was setup to allow local access to the CernVM File System (CernVM-F
 1. Local access to CVMFS
 2. A Linux environment in which to work with the CMSSW and OSG tools
 3. X11 and VNC support for using GUIs and ImageMagic
-4. Don't trip the Fermilab network security policies
+4. Doesn't trip the Fermilab network security policies
    - Don't ssh into the container using a password
    - Don't open unnecessary ports
    - Don't allow the use of passwords to login
@@ -44,6 +44,18 @@ docker pull aperloff/cms-cvmfs-docker[:tag]
 ```
 
 The number of tags varies from time to time based on the current number of branches in GitHub. There will always be a `latest` tag, which is built from the master branch.
+
+--------------------------------------------
+## Recommended configuration changes for the Docker daemon
+To reduce the attack surface for bad actors we highly recommend that you modify your Docker daemon (dockerd) configuration to bind container ports to localhost by default. This means that for any container you run, the port forwarding will only connect to the host computer, as long as no other IP is specified. This change has the added benefit of preventing your computer from being flagged by FNAL security scanners.
+
+If you have Docker Desktop, make this change by going to *Preferences* -> *Docker Engine* and adding the line:
+```json
+"ip": "<ip_address>"
+```
+It’s a good practice to bind ports to the `localhost`, which is address `127.0.0.1`.
+
+You can also use the daemon directly by using the command `dockerd --ip <ip_address>`.
 
 --------------------------------------------
 ## Container basics
@@ -156,6 +168,8 @@ If you'd like more manual control you can use the following commands:
   1. `vncserver -list`: Will list the available VNC servers running on the remote machine.
   2. `vncserver -kill :1`: Will kill a currently running VNC server using. `:1` is the "X DISPLAY #".
   3. `pkill -9 -P <process>`: Will kill the noVNC+WebSockify process if you use the PID given when running `start_vnc` or when starting manually.
+
+**Note:** Do not leave the VNC server listening or the container running for extended periods of time. Running a VNC server for an extended period of time increases the attack surface for bad actors unnecessarily.
 
 ### Using X11
 
